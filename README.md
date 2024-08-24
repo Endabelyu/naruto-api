@@ -1,17 +1,3 @@
-To install dependencies:
-
-```sh
-bun install
-```
-
-To run:
-
-```sh
-bun run dev
-```
-
-open http://localhost:80
-
 # Naruto API
 
 This is a simple Naruto API built using [Hono.js](https://hono.dev/). It allows you to manage a collection of ninjas with operations such as retrieving, creating, updating, and deleting ninja data.
@@ -48,4 +34,5 @@ This is a simple Naruto API built using [Hono.js](https://hono.dev/). It allows 
 
 ```bash
  bun dev
+ open http://localhost:80
 ```
