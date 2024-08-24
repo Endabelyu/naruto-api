@@ -19,10 +19,10 @@ This is a simple Naruto API built using [Hono.js](https://hono.dev/). It allows 
 
 1. **Clone the repository**:
 
-   ```bash
-   git clone <https://github.com/Endabelyu/naruto-api.git>
-   cd naruto-api
-   ```
+```bash
+git clone <https://github.com/Endabelyu/naruto-api.git>
+cd naruto-api
+```
 
 2. **Install dependencies**:
 
@@ -34,5 +34,8 @@ This is a simple Naruto API built using [Hono.js](https://hono.dev/). It allows 
 
 ```bash
  bun dev
- open http://localhost:80
 ```
+
+## Endpoints
+
+Documentation about endpoints and response will be present with Swagger UI <https://swagger.io/> asap.
