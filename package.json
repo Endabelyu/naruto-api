@@ -1,0 +1,13 @@
+{
+  "name": "naruto-api",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts"
+  },
+  "dependencies": {
+    "@hono/swagger-ui": "^0.4.0",
+    "hono": "^4.5.7"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
