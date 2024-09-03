@@ -7,5 +7,5 @@ COPY . /app
 
 RUN bun install
 
-EXPOSE 80
+EXPOSE 4000
 CMD [ "bun","dev" ]
