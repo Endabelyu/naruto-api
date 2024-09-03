@@ -42,4 +42,4 @@ Documentation about endpoints and response will be present with Swagger UI <http
 
 ## ERD
 
-Database design will present here <https://dbdiagram.io/d/Naruto-API-66cd37483f611e76e98fcc23> asap.
+Database design will present here <https://dbdiagram.io/d/Naruto-API-66cd37483f611e76e98fcc23> .
