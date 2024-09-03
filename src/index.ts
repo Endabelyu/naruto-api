@@ -1,136 +1,50 @@
 import { Hono } from 'hono';
 import { swaggerUI } from '@hono/swagger-ui';
-import {
-  createDataNinja,
-  deleteNinjaById,
-  editDataNinja,
-  getDataNinja,
-  getDataNinjaById,
-} from './ninja';
 
-const app = new Hono();
-// Use the middleware to serve Swagger UI at /ui
-app.get('/ui', swaggerUI({ url: '/doc' }));
+import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
+import { getNinjaSchemas } from './routes/ninja.routes';
+import { getNinjaController } from './controller';
+import ninja from './services/ninja.services';
+import village from './services/village.services';
+import clan from './services/clan.services ';
+import family from './services/family.services';
+
+const app = new OpenAPIHono();
 
 app.get('/', (c) => {
   return c.json({ message: 'Hello World' }, 200);
 });
-// get ninja
-
-app.get('/ninja', (c) => {
-  const ninja = getDataNinja();
-  return c.json(
-    {
-      ok: true,
-      message: 'Success!',
-      data: ninja,
-    },
-    200,
-  );
-});
-
-app.get('/ninja/:id', (c) => {
-  const id = c.req.param('id');
-  const ninjaById = getDataNinjaById(id);
-
-  return c.json(
-    {
-      ok: true,
-      message: 'Success!',
-      data: ninjaById,
-    },
-    200,
-  );
-});
-// get ninja
-
-// create ninja
-app.post('/ninja', async (c) => {
-  const ninjaBody = await c.req.json();
-  const addNinja = createDataNinja(ninjaBody);
-
-  if (addNinja.code === 200) {
-    return c.json(
-      {
-        ok: true,
-        message: 'New data ninja successfully added!',
-        data: addNinja.data,
-      },
-      201,
-    );
-  } else
-    return c.json(
-      {
-        ok: false,
-        message: addNinja.message,
-      },
-      409,
-    );
-});
-// create ninja
-
-// delete ninja
-app.delete('/ninja/:id', async (c) => {
-  const id = c.req.param('id');
-  const deleteNinja = deleteNinjaById(id);
-
-  if (deleteNinja.code === 404) {
-    return c.json(
-      {
-        ok: false,
-        message: deleteNinja.message,
-      },
-      404,
-    );
-  } else {
-    return c.json(
-      {
-        ok: true,
-        message: deleteNinja.message,
-        data: deleteNinja.data,
-      },
-      200,
-    );
-  }
-});
-// delete ninja
-
-// edit data ninja
-app.patch('/ninja/:id', async (c) => {
-  const bodyNinja = await c.req.json();
-  const id = c.req.param('id');
-  const editNinja = editDataNinja(id, bodyNinja);
-
-  if (editNinja.code === 404) {
-    return c.json(
-      {
-        ok: false,
-        message: editNinja.message,
-      },
-      404,
-    );
-  } else {
-    return c.json(
-      {
-        ok: true,
-        message: editNinja.message,
-        data: editNinja.data,
-      },
-      200,
-    );
-  }
-});
-// edit data ninja
-
 app.notFound((c) => {
-  return c.text('Your request not found', 404);
+  return c.text('Sorry, the page you are looking for does not exist.', 404);
 });
 
-// app.onError((err, c) => {
-//   console.error(`${err}`);
-//   return c.text('Custom Error Message', 500);
-// });
+app.onError((err, c) => {
+  return c.text(
+    'Oops! Something went wrong on our end. Please try again later.',
+    500,
+  );
+});
+
+// Use the middleware to serve Swagger UI at /ui
+
+app.get('/api', swaggerUI({ url: '/doc' }));
+app.doc('/doc', {
+  openapi: '3.0.0',
+  info: {
+    version: '1.0.0',
+    title: 'Naruto API',
+    description:
+      'Naruto API is a RESTful service that provides access to detailed data on ninjas from the Naruto anime. Explore character profiles, families,villages, clans, and more. Perfect for developers and fans, it provides a structured gateway to explore the Naruto universe.',
+  },
+});
+
+// API ROUTES
+app.route('/api/ninja', ninja);
+app.route('/api/family', family);
+app.route('/api/clan', clan);
+app.route('/api/village', village);
+
 export default {
-  port: 80,
+  port: 4000,
   fetch: app.fetch,
 };
