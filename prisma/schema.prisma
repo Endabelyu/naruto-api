@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Clan {
+  id        Int      @id @default(autoincrement())
+  name     String    @unique  @db.VarChar(100) 
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  ninjas Ninja[]
+
+  @@map("clans")
+}
+
+model Family {
+   id        Int      @id @default(autoincrement())
+  name       String   @unique  @db.VarChar(100) 
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  ninjas Ninja[]
+
+  @@map("families")
+
+}
+
+model Village {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique  @db.VarChar(100) 
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  ninjas Ninja[]
+
+
+
+  @@map("vilages")
+
+}
+
+model Ninja {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique  @db.VarChar(100) 
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  village_id  Int?
+  family_id   Int?
+  clan_id     Int?
+
+  village    Village? @relation(fields: [village_id], references: [id])
+  family     Family?  @relation(fields: [family_id], references: [id])
+  clan       Clan?    @relation(fields: [clan_id], references: [id])
+
+  @@map("ninjas")
+
+}
+
