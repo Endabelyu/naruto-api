@@ -1,5 +1,4 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
-import { getNinjaSchemas } from '../routes/ninja.routes';
 import {
   createFamilyRoute,
   deleteFamilyByNameRoute,
@@ -7,7 +6,6 @@ import {
   getFamilyByNameRoute,
   getFamilyRoute,
 } from '../routes/family.routes';
-import { getDataNinja } from '../models/ninja';
 import {
   createFamily,
   deleteFamilyByName,
