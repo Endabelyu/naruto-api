@@ -1,5 +1,4 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
-import { getNinjaSchemas } from '../routes/ninja.routes';
 import {
   createClanRoute,
   deleteClanByNameRoute,
@@ -7,12 +6,11 @@ import {
   getClanByNameRoute,
   getClanRoute,
 } from '../routes/clan.routes';
-import { getDataNinja } from '../models/ninja';
 import {
   createClan,
   deleteClanByName,
   editClanByName,
-  getClan,
+  getAllClans,
   getClanByName,
 } from '../models/clan';
 
@@ -22,7 +20,7 @@ const clan = new OpenAPIHono();
 // The openapi.json will be available at /doc
 
 clan.openapi(getClanRoute, async (c) => {
-  const clans = await getClan();
+  const clans = await getAllClans();
   return c.json(
     {
       ok: true,
