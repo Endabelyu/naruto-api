@@ -23,11 +23,11 @@ export const FamilySchema = z
   })
   .openapi('Family');
 
-export const createFamilySchema = FamilySchema.omit({
-  id: true,
-  created_at: true,
-  updated_at: true,
-}).openapi('CreateFamily');
+export const createFamilySchema = z
+  .object({
+    name: z.string().min(4),
+  })
+  .openapi('CreateFamily');
 
 export const createFamilyConflictData = z.object({
   ok: z.boolean().openapi({
