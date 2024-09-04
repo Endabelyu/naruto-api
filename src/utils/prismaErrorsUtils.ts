@@ -1,3 +1,4 @@
+import { number } from 'zod';
 import { Response } from '../models/clan';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 interface ErrorMeta {
@@ -31,8 +32,12 @@ export interface PrismaError extends Error {
   meta?: ErrorMeta;
 }
 
-export function handlePrismaError(error: PrismaError): Response {
+export function handlePrismaError(error: PrismaError): {
+  code: number;
+  message: string;
+} {
   if (error instanceof PrismaClientKnownRequestError) {
+    console.log(error, 'erros');
     switch (error.code) {
       case 'P2000':
         return {
