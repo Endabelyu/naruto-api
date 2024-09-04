@@ -23,11 +23,9 @@ export const clanSchema = z
   })
   .openapi('Clan');
 
-export const createClanSchema = clanSchema
-  .omit({
-    id: true,
-    createdAt: true,
-    updatedAt: true,
+export const createClanSchema = z
+  .object({
+    name: z.string().min(4),
   })
   .openapi('CreateClan');
 
