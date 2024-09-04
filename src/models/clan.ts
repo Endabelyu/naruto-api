@@ -10,7 +10,7 @@ export type Response = {
   code: number;
   message?: string;
 };
-export async function getClan(): Promise<Clan[]> {
+export async function getAllClans(): Promise<Clan[]> {
   return await prisma.clan.findMany();
 }
 
