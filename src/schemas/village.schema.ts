@@ -1,5 +1,5 @@
 import { z } from '@hono/zod-openapi';
-export const IdSchema = z.coerce.number().int().min(1).openapi({
+const IdSchema = z.coerce.number().int().min(1).openapi({
   description: 'Unique identifier for the village',
   example: 1,
 });
@@ -21,13 +21,11 @@ export const villageSchema = z
       example: '2023-08-25T12:00:00Z',
     }),
   })
-  .openapi('village');
+  .openapi('Village');
 
-export const createvillageSchema = villageSchema
-  .omit({
-    id: true,
-    createdAt: true,
-    updatedAt: true,
+export const createvillageSchema = z
+  .object({
+    name: z.string().min(4),
   })
   .openapi('Createvillage');
 
