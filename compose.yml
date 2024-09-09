@@ -4,35 +4,39 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: 'naruto_api'
+    container_name: "naruto_api"
     ports:
-      - '5000:4000'
+      - "5000:4000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - .:/app
     develop:
       watch:
-        - path: ./app/src
+        - path: ./src
           action: sync
-          target: ./app/src
+          target: /usr/local/app/src
           ignore:
             - node_modules/
-        - path: ./app/package.json
+        - path: ./src/package.json
           action: rebuild
 
   db:
     image: postgres
-    container_name: 'naruto_db'
+    container_name: "naruto_db"
     ports:
-      - '5432:5432'
-    # environment:
-    #   POSTGRES_USER: ${DB_USER}
-    #   POSTGRES_PASSWORD: ${DB_PASS}
-    #   POSTGRES_DB: ${DB_NAME}
+      - "5432:5432"
     env_file:
       - path: .env
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d naruto -U n4ruto"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    restart: on-failure
 volumes:
   pgdata:

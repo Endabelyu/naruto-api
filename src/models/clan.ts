@@ -62,7 +62,6 @@ export async function editClanByName(
 ): Promise<Response> {
   try {
     const names = formatName(name);
-    console.log(names, payload, 'namess');
 
     const updateClan = await prisma.clan.update({
       where: {
@@ -93,7 +92,6 @@ export async function deleteClanByName(name: string): Promise<Response> {
         name: name,
       },
     });
-    console.log(deleteUser, 'deltess');
     if (!deleteUser) {
       return {
         code: 404,
