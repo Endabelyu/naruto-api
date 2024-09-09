@@ -11,9 +11,7 @@ COPY prisma ./prisma/
 COPY . .
 
 # RUN bunx prisma migrate
-RUN bunx prisma migrate deploy
-
-RUN bunx prisma db seed
+RUN bunx prisma generate
 
 EXPOSE 4000
-CMD [ "bun","dev" ]
+CMD [ "bun","start:production" ]

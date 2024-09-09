@@ -28,6 +28,12 @@ services:
         condition: service_healthy
     volumes:
       - .:/app
+    command: >
+      sh -c "bunx prisma migrate deploy && 
+      if [ ! -f /app/prisma/.seed_done ]; then 
+        bun prisma db seed && touch /app/prisma/.seed_done; 
+      fi &&
+      bun run src/index.ts"
     # develop:
     #   watch:
     #     - path: ./src
