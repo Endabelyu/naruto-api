@@ -12,15 +12,15 @@ services:
         condition: service_healthy
     volumes:
       - .:/app
-    develop:
-      watch:
-        - path: ./src
-          action: sync
-          target: /usr/local/app/src
-          ignore:
-            - node_modules/
-        - path: ./src/package.json
-          action: rebuild
+    # develop:
+    #   watch:
+    #     - path: ./src
+    #       action: sync
+    #       target: /usr/local/app/src
+    #       ignore:
+    #         - node_modules/
+    #     - path: ./src/package.json
+    #       action: rebuild
 
   db:
     image: postgres
@@ -28,7 +28,7 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - path: .env
+      - .env
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
