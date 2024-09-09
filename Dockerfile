@@ -16,7 +16,7 @@ COPY . .
 COPY prisma ./prisma/
 
 # Run Prisma generate to ensure the client is generated
-RUN bun prisma generate
+RUN bun run prisma generate
 
 # Start the application
 CMD ["bun", "start:production"]
