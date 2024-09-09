@@ -1,4 +1,20 @@
 services:
+  db:
+    image: postgres
+    container_name: "naruto_db"
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d naruto -U n4ruto"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    restart: on-failure
   app:
     image: naruto-api
     build:
@@ -22,21 +38,5 @@ services:
     #     - path: ./src/package.json
     #       action: rebuild
 
-  db:
-    image: postgres
-    container_name: "naruto_db"
-    ports:
-      - "5432:5432"
-    env_file:
-      - .env
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d naruto -U n4ruto"]
-      interval: 1m30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
-    restart: on-failure
 volumes:
   pgdata:
