@@ -22,7 +22,7 @@ services:
       dockerfile: Dockerfile
     container_name: "naruto_api"
     ports:
-      - "5000:4000"
+      - "5000:3000"
     depends_on:
       db:
         condition: service_healthy
