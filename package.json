@@ -5,13 +5,12 @@
     "db:seed": "bun prisma db seed",
     "prestart": "bunx prisma migrate dev",
     "start": "bun run src/index.ts",
-    "start:production": "bun prisma migrate deploy  && bun run src/index.ts"
+    "start:production": "bunx prisma migrate deploy && bun run src/index.ts"
   },
   "prisma": {
     "seed": "bun run prisma/seed.ts"
   },
   "dependencies": {
-    "prisma": "^5.19.0",
     "@hono/swagger-ui": "^0.4.0",
     "@hono/zod-openapi": "^0.15.3",
     "@prisma/client": "^5.19.0",
@@ -22,6 +21,7 @@
     "@types/bun": "latest",
     "@types/node": "^22.5.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "prisma": "^5.19.0"
   }
 }

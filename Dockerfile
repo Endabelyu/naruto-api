@@ -1,16 +1,22 @@
-FROM oven/bun
+FROM oven/bun:latest
 
+# Set the working directory
 WORKDIR /app
 
-COPY . /app
+# Copy the package.json and bun.lockb first to leverage Docker cache
+COPY package.json bun.lockb ./
 
-RUN bun install
+# Install dependencies
+RUN bun install --frozen-lockfile
 
-COPY prisma ./prisma/
-
+# Copy the rest of the application code
 COPY . .
 
-# RUN bunx prisma migrate
-RUN bun prisma generate
+# Copy prisma folder (if it's separate from the rest of the code)
+COPY prisma ./prisma/
 
-CMD [ "bun","start:production" ]
+# Run Prisma generate to ensure the client is generated
+RUN bun run prisma generate
+
+# Start the application
+CMD ["bun", "start:production"]
