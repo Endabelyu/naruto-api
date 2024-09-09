@@ -11,6 +11,6 @@ COPY prisma ./prisma/
 COPY . .
 
 # RUN bunx prisma migrate
-RUN bunx prisma generate
+RUN bun prisma generate
 
 CMD [ "bun","start:production" ]

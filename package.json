@@ -5,10 +5,10 @@
     "db:seed": "bun prisma db seed",
     "prestart": "bunx prisma migrate dev",
     "start": "bun run src/index.ts",
-    "start:production": "bunx prisma migrate deploy && bun prisma db seed && bun run src/index.ts"
-  },
-  "prisma": {
-    "seed": "bun run prisma/seed.ts"
+    "start:production": "bun prisma migrate deploy  && bun run src/index.ts",
+    "prisma": {
+      "seed": "bun run prisma/seed.ts"
+    }
   },
   "dependencies": {
     "@hono/swagger-ui": "^0.4.0",
